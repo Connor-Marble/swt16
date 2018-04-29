@@ -12,6 +12,8 @@
 ## Update
 The nano board included in the kit can be updated in the [Arduino IDE](https://www.arduino.cc/en/Main/Software).
 
+[Apola Kipso has written a very detailed guide that can help you bring the update to the SWT16 module.](https://medium.com/@apolakipso/update-the-robaux-swt16-firmware-dcae16ad48c4)
+
 ### Driver
 [Apple Macintosh](http://www.wch.cn/download/CH341SER_MAC_ZIP.html)
 
