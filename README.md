@@ -1,6 +1,6 @@
 # Robaux SWT16 Firmware
 
-##Version 1.0.7
+## Version 1.0.7
 ### New
 * Flip Mode > Util Mode (Button 16) > Button 3
 ### Improvment
