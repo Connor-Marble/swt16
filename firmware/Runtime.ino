@@ -42,7 +42,8 @@ void initSequencer() {
   delay(500);
   enDisableAutoPlay();
   setMode(MODE_HOME);
-
+  tick = 0;
+  onReset();
 }
 
 void checkIdle() {

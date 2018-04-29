@@ -52,18 +52,18 @@ void updateTrigger(boolean hot) {
     boolean playTrigger = false;
     // Is Trigger
     playTrigger =  validClock && getTrigger(foo, patternData[foo][PATTERN_CURRENT_TICK]) ? true : playTrigger;
-    // Is Fill
-    playTrigger =  validClock && patternData[foo][PATTERN_FILL] ? true : playTrigger;
     // Retrigger
     playTrigger = !patternData[foo][PATTERN_RETRIGGER] && getTrigger(foo, (patternData[foo][PATTERN_CURRENT_TICK] + (patternData[foo][PATTERN_LENGTH] + 1) - 1) % (patternData[foo][PATTERN_LENGTH] + 1)) ? true : playTrigger;
     // Is Invers
     playTrigger  = validClock &&  patternData[foo][PATTERN_INVERSE] ? !playTrigger : playTrigger;
     // Is Muted
     playTrigger = !patternData[foo][PATTERN_MUTE] ? false : playTrigger;
+    // Is Fill
+    playTrigger =  validClock && patternData[foo][PATTERN_FILL] ? true : playTrigger;
 
     if (playTrigger) {
-      triggerOutputData[0] += triggerOutputs[0][foo];
-      triggerOutputData[1] += triggerOutputs[1][foo];
+      triggerOutputData[0] += triggerOutputs[0][flipMode ? 15 - foo : foo];
+      triggerOutputData[1] += triggerOutputs[1][flipMode ? 15 - foo : foo];
 
     }
     if (validClock) {
@@ -73,12 +73,12 @@ void updateTrigger(boolean hot) {
     if (playTrigger && !patternData[foo][PATTERN_MIDI_NOTE_ON]) {
       Serial.write(0x90 + patternData[foo][PATTERN_MIDI_CHANNEL]);
 
-      Serial.write(36 + foo);
+      Serial.write(36 + (flipMode ? 15 - foo : foo));
       Serial.write(100);
     } else if (!playTrigger && patternData[foo][PATTERN_MIDI_NOTE_ON]) {
       Serial.write(0x90 + patternData[foo][PATTERN_MIDI_CHANNEL]);
 
-      Serial.write(36 + foo);
+      Serial.write(36 + (flipMode ? 15 - foo : foo));
       Serial.write(0);
     }
     patternData[foo][PATTERN_MIDI_NOTE_ON] = playTrigger;

@@ -5,12 +5,13 @@ void saveData() {
   EEPROM.write(2, disableAnimations);
   EEPROM.write(3, autoReset);
   EEPROM.write(4, autoPlayTempo);
+  EEPROM.write(5, flipMode);
   for (byte foo = 0; foo < 16; foo++) {
-    EEPROM.write((foo * 5) + 5, steps2num(patternData[foo][PATTERN_LENGTH]) + (patternData[foo][PATTERN_LENGTH_RESET] * 128));
-    EEPROM.write((foo * 5) + 6, steps2num(patternData[foo][PATTERN_MIDI_CHANNEL]) + (patternData[foo][PATTERN_RETRIGGER] * 128));
-    EEPROM.write((foo * 5) + 7, steps2num(patternData[foo][PATTERN_CLOCK]));
-    EEPROM.write((foo * 5) + 8, patternData[foo][PATTERN_NOTES_ROW_0]);
-    EEPROM.write((foo * 5) + 9, patternData[foo][PATTERN_NOTES_ROW_1]);
+    EEPROM.write((foo * 6) + 6, steps2num(patternData[foo][PATTERN_LENGTH]) + (patternData[foo][PATTERN_LENGTH_RESET] * 128));
+    EEPROM.write((foo * 6) + 7, steps2num(patternData[foo][PATTERN_MIDI_CHANNEL]) + (patternData[foo][PATTERN_RETRIGGER] * 128));
+    EEPROM.write((foo * 6) + 8, steps2num(patternData[foo][PATTERN_CLOCK]));
+    EEPROM.write((foo * 6) + 9, patternData[foo][PATTERN_NOTES_ROW_0]);
+    EEPROM.write((foo * 6) + 10, patternData[foo][PATTERN_NOTES_ROW_1]);
   }
 }
 void factoryReset() {
@@ -20,6 +21,7 @@ void factoryReset() {
   disableAnimations = 0;
   autoReset = 1;
   autoPlayTempo = 120;
+  flipMode = false;
   for (byte foo = 0; foo < 16; foo++) {
     patternData[foo][PATTERN_LENGTH] = 15;
     patternData[foo][PATTERN_LENGTH_RESET] = 1;
@@ -38,20 +40,21 @@ void loadData() {
     disableAnimations = EEPROM.read(2);
     autoReset = EEPROM.read(3);
     autoPlayTempo = EEPROM.read(4);
+    flipMode = EEPROM.read(5);
     for (byte foo = 0; foo < 16; foo++) {
-      byte val = EEPROM.read((foo * 5) + 5);
+      byte val = EEPROM.read((foo * 6) + 6);
       patternData[foo][PATTERN_LENGTH] = num2steps(val);
       patternData[foo][PATTERN_LENGTH_RESET] = val & 1 << 7 ? 1 : 0;
 
-      val = EEPROM.read((foo * 5) + 6);
+      val = EEPROM.read((foo * 6) + 7);
       patternData[foo][PATTERN_MIDI_CHANNEL] = num2steps(val);
       patternData[foo][PATTERN_RETRIGGER] = val & 1 << 7 ? 1 : 0;
 
-      val = EEPROM.read((foo * 5) + 7);
+      val = EEPROM.read((foo * 6) + 8);
       patternData[foo][PATTERN_CLOCK] = num2steps(val);
 
-      patternData[foo][PATTERN_NOTES_ROW_0] = EEPROM.read((foo * 5) + 8);
-      patternData[foo][PATTERN_NOTES_ROW_1] = EEPROM.read((foo * 5) + 9);
+      patternData[foo][PATTERN_NOTES_ROW_0] = EEPROM.read((foo * 6) + 9);
+      patternData[foo][PATTERN_NOTES_ROW_1] = EEPROM.read((foo * 6) + 10);
     }
   } else {
     factoryReset();

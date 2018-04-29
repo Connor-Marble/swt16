@@ -1,5 +1,5 @@
 /**
- * Robaux SWT16 Firmware Version 1.0.6
+ * Robaux SWT16 Firmware Version 1.0.7
  * by Robert Pøul Menzel
  * musique@robaux.co
  */
@@ -7,7 +7,7 @@
 #include <Wire.h>
 #include "TimerOne.h"
 
-#define VERSION 106
+#define VERSION 107
 
 #define INTERRUPT_CLOCK  2
 #define INTERRUPT_RESET  3
@@ -73,6 +73,7 @@ int idleTick = 0;
 byte autoPlayHot = false;
 byte autoPlayTick = 0;
 byte autoPlayRun = false;
+byte flipMode = true;
 long autoPlayTempo = 120;
 
 byte autoClockEnabled = 0;

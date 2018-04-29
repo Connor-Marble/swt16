@@ -7,7 +7,7 @@ void resetFillInvert() {
 void checkButtons() {
   if (buttonsEnabled && readSwitches()) {
     for (uint8_t foo = 0; foo < 16; foo++) {
-      if (justPressed(foo)) {
+      if (justPressed(flipMode ? 15 - foo : foo)) {
         resetIdle();
         if (currentMode == MODE_HOME) {
           setMode(foo);
@@ -49,7 +49,7 @@ void checkButtons() {
           onSelectTrack(foo);
         }
       }
-      if (justReleased(foo)) {
+      if (justReleased(flipMode ? 15 - foo : foo)) {
         onButtonReleased(foo);
       }
     }
@@ -209,7 +209,9 @@ void onModeUtil(uint8_t button) {
     disableAnimations = !disableAnimations;
   } else if (button == 1) {
     autoReset = !autoReset;
-  } else if (button == 3) {
+  } else if (button == 2) {
+    flipMode = !flipMode;
+  } else if (button == 7) {
     factoryReset();
   }
 }

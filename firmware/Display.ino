@@ -68,7 +68,7 @@ void updateDisplay() {
       } else if (currentMode == MODE_INVERSE) {
         doSetLed(foo, patternData[foo][PATTERN_INVERSE] && !(lightIsHigh && getTrigger(foo, patternData[foo][PATTERN_CURRENT_TICK]) || (patternData[foo][PATTERN_NOTES_ROW_0] == 0 && patternData[foo][PATTERN_NOTES_ROW_1] == 0 )  ));
       }  else if (currentMode == MODE_UTIL) {
-        doSetLed(foo, (foo == 0 && disableAnimations) || (foo == 1 && autoReset));
+        doSetLed(foo, (foo == 0 && disableAnimations) || (foo == 1 && autoReset) || (foo == 2 && flipMode));
       } else if (currentMode == MODE_LENGTH_EDIT) {
         doSetLed(foo, foo == patternData[currentTrack][PATTERN_LENGTH]);
       } else if (currentMode == MODE_SET_MIDI_CHANNEL) {

@@ -1,14 +1,20 @@
 byte switchVar1;
 byte switchVar2;
-int buttonPos[16] = {1, 0, 7, 6, 3, 2, 5, 4, 10, 11, 8, 9, 14, 12, 13, 15};
+int buttonPos[2][16] = {
+  {1, 0, 7, 6, 3, 2, 5, 4, 10, 11, 8, 9, 14, 12, 13, 15},
+  {15, 12, 14, 13, 9, 8, 11, 10, 2, 3, 6, 7, 4, 5, 0, 1}
+};
+
+
 byte buttons0[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 byte buttons1[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-int ledsTop[16] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 8, 4, 2, 32, 16, 128, 64};
-int ledsBottom[16] = {1, 8, 4, 2, 32, 16, 128, 64, 0, 0, 0, 0, 0, 0, 0, 0};
-int leds[16] = {};
+
+
+byte leds[2][8] = {  {1, 8, 4, 2, 32, 16, 128, 64},  {1, 8, 4, 2, 32, 16, 128, 64}};
+byte activeLeds[2] = {0, 0};
+
+
 int buttons[16] = {};
-int ledsTopValue = 0;
-int ledsBottomValue = 0;
 int buttonStatus[16] = {};
 int lastPressed[16] = {};
 int currentPressed[16] = {};
@@ -19,25 +25,23 @@ void setupButtonBoard() {
   pinMode(BUTTON_CLOCK_PIN, OUTPUT);
   pinMode(BUTTON_DATA_PIN, INPUT);
 }
+
+
+
 void setLedValue(int led, boolean value) {
   if (led < 16) {
-    if (led < 8) {
-      int v = ledsBottom[led];
-      if (value && !(ledsBottomValue & v)) {
-        ledsBottomValue += v;
-      } else if (!value && (ledsBottomValue & v)) {
-        ledsBottomValue -= v;
-      }
-    } else {
-      int v = ledsTop[led];
-      if (value && !(ledsTopValue & v)) {
-        ledsTopValue += v;
-      } else if (!value && (ledsTopValue & v)) {
-        ledsTopValue -= v;
-      }
+    led = flipMode ? 15 - led : led;
+    boolean top = led < 8;
+    int v = leds[top][led - (top ? 8 : 0)];
+    if (value && !(activeLeds[top] & v)) {
+      activeLeds[top] += v;
+    } else if (!value && (activeLeds[top] & v)) {
+      activeLeds[top] -= v;
     }
   }
 }
+
+
 void setLed(byte led) {
   setLedValue(led, true);
 }
@@ -46,12 +50,12 @@ void clearLed(byte led) {
 }
 void writeDisplay() {
   digitalWrite(LEDS_LATCH_PIN, 0);
-  writeTriggers(LEDS_DATA_PIN, LEDS_CLOCK_PIN, ledsTopValue);
-  writeTriggers(LEDS_DATA_PIN, LEDS_CLOCK_PIN, ledsBottomValue);
+  writeTriggers(LEDS_DATA_PIN, LEDS_CLOCK_PIN, activeLeds[0]);
+  writeTriggers(LEDS_DATA_PIN, LEDS_CLOCK_PIN, activeLeds[1]);
   digitalWrite(LEDS_LATCH_PIN, 1);
 }
 byte getButtonIndex(byte button) {
-  return buttonPos[button];
+  return buttonPos[0][button];
 }
 byte shiftIn(int myBUTTON_DATA_PIN, int myBUTTON_CLOCK_PIN) {
   int i;
