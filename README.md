@@ -1,5 +1,16 @@
 # Robaux SWT16 Firmware
 
+## Version 1.1.0
+### New 
+#### 64 Steps per Track
+* There is a new pattern concept: instead of 16 steps there are now 64 (8x8) steps per track! [Watch the Demo(https://youtu.be/YANQiaSv0HA)]:
+
+#### Debug-Mode
+* To check if all triggers, buttons and LEDs are working, there is now the debug mode. Go to Util Mode (Button 16)> Button 13
+* The sequencer is stopped. If you then press the buttons 1-16, the respective lamp lights up and the corresponding trigger is triggered. To exit the debug mode, press the home button.
+
+---
+
 ## Version 1.0.7
 ### New
 * Flip Mode > Util Mode (Button 16) > Button 3
@@ -7,7 +18,7 @@
 * Continuous triggers even when track is muted.
 * Factory Reset now in > Util Mode (Button 16) > Button 8
 
-
+---
 
 ## Update
 The nano board included in the kit can be updated in the [Arduino IDE](https://www.arduino.cc/en/Main/Software).
