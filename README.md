@@ -3,7 +3,7 @@
 ## Version 1.1.0
 ### New 
 #### 64 Steps per Track
-* There is a new pattern concept: instead of 16 steps there are now 64 (8x8) steps per track! [Watch the Demo(https://youtu.be/YANQiaSv0HA)]:
+* There is a new pattern concept: instead of 16 steps there are now 64 (8x8) steps per track! [Watch the Demo](https://youtu.be/YANQiaSv0HA):
 
 #### Debug-Mode
 * To check if all triggers, buttons and LEDs are working, there is now the debug mode. Go to Util Mode (Button 16)> Button 13
