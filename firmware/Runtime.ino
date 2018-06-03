@@ -81,21 +81,28 @@ void initSequencer() {
         setMode(MODE_HOME);
         tick = 0;
         onReset();
+        digitalWrite(TRIGGER_OUT_LATCH, 0);
+        writeTriggers(TRIGGER_OUT_DATA, TRIGGER_OUT_CLOCK, 0);
+        writeTriggers(TRIGGER_OUT_DATA, TRIGGER_OUT_CLOCK, 0);
+        digitalWrite(TRIGGER_OUT_LATCH, 1);
 }
 
 void checkIdle() {
-        wasIdle = isIdle;
-        isIdle = millis() > 60000 + onClockHighTime;
-        if (wasIdle != isIdle) {
-                for (byte foo = 0; foo < 16; foo++) {
-                        setLedValue(foo, false);
+        if(disableAnimations) {
+                resetIdle();
+        }else{
+                wasIdle = isIdle;
+                isIdle = millis() > 60000 + onClockHighTime;
+                if (wasIdle != isIdle) {
+                        for (byte foo = 0; foo < 16; foo++) {
+                                setLedValue(foo, false);
+                        }
+                        writeDisplay();
                 }
-                writeDisplay();
         }
 }
 void resetIdle() {
-        wasIdle = false;
-        isIdle = false;
+        wasIdle = isIdle = false;
         onClockHighTime = millis() - 1;
 }
 

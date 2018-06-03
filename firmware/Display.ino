@@ -6,33 +6,39 @@ boolean playAnimation(byte animation[]) {
                 for (byte foo = 0; foo < 16; foo++) {
                         setLedValue(foo, false);
                 }
+                writeDisplay();
+                delay(30);
                 for (byte foo = 0; foo < 10; foo++) {
                         if (animation[foo] < 16) {
                                 setLedValue(animation[foo], true);
                         }
                 }
                 writeDisplay();
-                delay(1000);
+                delay(300);
+                for (byte foo = 0; foo < 16; foo++) {
+                        setLedValue(foo, false);
+                }
+                writeDisplay();
+                delay(30);
         } else {
                 for (byte foo = 0; foo < 16; foo++) {
                         setLedValue(foo, false);
                         writeDisplay();
-                        delay(20);
+                        delay(10);
                 }
                 for (byte foo = 0; foo < 10; foo++) {
                         if (animation[foo] < 16) {
                                 setLedValue(animation[foo], true);
                                 writeDisplay();
-                                delay(30);
+                                delay(20);
                         }
                 }
                 delay(200);
                 for (byte foo = 0; foo < 10; foo++) {
                         setLedValue(animation[foo], false);
                         writeDisplay();
-                        delay(30);
+                        delay(20);
                 }
-                delay(20);
         }
         return true;
 }
@@ -66,7 +72,11 @@ void updateDisplay() {
                         } else if (currentMode == MODE_AUTOPLAY) {
                                 setLedValue(foo, (foo == 2  && autoClockEnabled && autoPlayTick % 4 == 0) || (foo == 3  && autoClockEnabled && autoPlayTick % 2 == 0) || ((foo == 8 || foo == 9 || foo == 12 || foo == 13) && autoClockEnabled) || ((foo == 10 || foo == 11 || foo == 14 || foo == 15) && !autoClockEnabled) || ((foo == 0 && autoClockEnabled) && autoPlayRun && autoPlayHot));
                         } else if (currentMode == MODE_MUTE) {
-                                setLedValue(foo, patternData[foo][PATTERN_MUTE] && !(lightIsHigh && getTrigger(foo, patternData[foo][PATTERN_CURRENT_TICK], patternData[foo][PATTERN_LENGTH]) || (patternData[foo][PATTERN_BAR_0] == 0 && patternData[foo][PATTERN_BAR_1] == 0 )));
+
+
+
+
+                                setLedValue(foo,(patternData[foo][PATTERN_BAR_0] + patternData[foo][PATTERN_BAR_1] +patternData[foo][PATTERN_BAR_2] +patternData[foo][PATTERN_BAR_3] +patternData[foo][PATTERN_BAR_4] +patternData[foo][PATTERN_BAR_5] +patternData[foo][PATTERN_BAR_6] +patternData[foo][PATTERN_BAR_7]==0)||!patternData[foo][PATTERN_MUTE]||getTrigger(foo, patternData[foo][PATTERN_CURRENT_TICK], patternData[foo][PATTERN_LENGTH]) ? false : true);
                         } else if (currentMode == MODE_FILL) {
                                 setLedValue(foo, patternData[foo][MODE_FILL] && !(lightIsHigh && getTrigger(foo, patternData[foo][PATTERN_CURRENT_TICK], patternData[foo][PATTERN_LENGTH]) || (patternData[foo][PATTERN_BAR_0] == 0 && patternData[foo][PATTERN_BAR_1] == 0 )));
                         }  else if (currentMode == MODE_UTIL) {

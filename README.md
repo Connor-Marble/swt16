@@ -1,5 +1,15 @@
 # Robaux SWT16 Firmware
 
+## Attention: When updating the firmware, all patterns and settings are overwritten!
+
+## Version 1.1.1
+### New 
+### Improvment
+* Better visualization of mute mode.
+* If the animations are disabled, the screen saver will also be disabled.
+
+---
+
 ## Version 1.1.0
 ### New 
 #### 64 Steps per Track

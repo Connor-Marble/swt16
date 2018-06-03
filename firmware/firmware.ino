@@ -7,7 +7,7 @@
 #include <Wire.h>
 #include "TimerOne.h"
 
-#define VERSION 110
+#define VERSION 111
 
 #define INTERRUPT_CLOCK  2
 #define INTERRUPT_RESET  3
